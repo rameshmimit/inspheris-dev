@@ -2,7 +2,6 @@ class bootstrap {
   class { "solr": }
 
   class { '::mysql::server':
-    #root_password    => 'iNsSnS05T09!',
     root_password    => 'redhat',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } },
 
