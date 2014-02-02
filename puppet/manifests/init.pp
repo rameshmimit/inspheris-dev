@@ -1,31 +1,31 @@
-class inspheris_bootstrap {
+class bootstrap {
+  class { "solr": }
 
- exec { 'apt-get update':
-   command => 'apt-get update',
-   path => ['/usr/bin', '/bin', '/usr/sbin', '/sbin', '/usr/local/bin', '/usr/local/sbin/']
- }
+  class { '::mysql::server':
+    #root_password    => 'iNsSnS05T09!',
+    root_password    => 'redhat',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
 
-## Install webserver
-  package { 'apache2':
-    ensure => installed,
+    databases => {
+      'trunk_mainclub' => {
+        ensure  => 'present',
+        charset => 'utf8',
+      },
+      'trunk_subclub' => {
+        ensure  => 'present',
+        charset => 'utf8',
+      },
+    },
+    grants => {
+      'inspheris@localhost/trunk_mainclub.*' => {
+         ensure     => 'present',
+         options    => ['GRANT'],
+         privileges => ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+         table      => 'trunk_mainclub.*',
+         user       => 'inspheris@localhost',
+      },
+    }
   }
- 
-  package {'libapache2-mod-jk':
-    ensure => installed,
-    require => Package['apache2'],
-  }
-  package { ['mysql-server', 'mysql-client']: 
-    ensure => 'installed',
-  }
-  
-     
-## Install some utilities
-  package { [ 'git','htop', 'nmap', 'vim', 'vim-common', 'emacs' ]:
-    ensure => installed,
-  }
-
-
+  class { 'apache': }
 }
-
-include solr
-include inspheris_bootstrap
+include bootstrap
