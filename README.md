@@ -25,16 +25,3 @@ in `/etc/puppet`.
 [Librarian-puppet](https://github.com/rodjek/librarian-puppet) project for details.
 * `puppet/manifests/main.pp` - your main Puppet manifest.
 * `puppet/.gitignore` - configured to ignore temporary directories and files created by Librarian-puppet.
-
-## Contribute
-
-Patches and suggestions welcome.
-
-## Issues
-
-Please raise issues via the github issue tracker.
-
-## License
-
-Please see the [LICENSE](https://github.com/purple52/librarian-puppet-vagrant/blob/master/LICENSE)
-file.
